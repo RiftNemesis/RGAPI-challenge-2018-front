@@ -1,0 +1,33 @@
+<div 
+     *ngIf="data?.content && template.show" 
+     class="block" 
+     ngDraggable ngResizable 
+     [handle]="myHandle" 
+     [preventDefaultEvent]="true" 
+     [ngDraggable]="!lock.locked" 
+     [ngResizable]="!lock.locked" 
+     (stopped)="onStop($event)"  
+     (rzStop)="onResizeStop($event)" 
+     [position]="position"
+     [ngStyle]="{
+                'width': template.size?.width+'px',
+                'height': template.size?.height+'px',
+                'transform': 'translate('+position?.x+'px,'+position?.y+'px)'
+                }" 
+     [inBounds]="false" 
+     [bounds]="bounds"  
+     [gridSize]="params.gridValue" 
+     [rzGrid]="params.gridValue"
+     #myBounds >
+    
+    <div #myHandle class="drag-block-handle" [ngClass]="{'locked': lock.locked}"> X </div>
+    <div *ngIf="template.label"><h4>{{data.name}}</h4></div>
+    <!--<ng-container *ngFor="let c of data?.content| keyvalue">-->
+    <ng-container *ngFor="let t of template?.content| keyvalue">
+        <image *ngIf="t.value.type == 'img'" [value]="data?.content[t.key].value" [bounds]=myBounds [(template)]=t.value></image>
+        <string *ngIf="t.value.type == 'string'" [value]="data?.content[t.key].value" [name]="t.value.name" [bounds]=myBounds [(template)]=t.value></string>
+        <numeric *ngIf="t.value.type == 'numeric'" [value]="data?.content[t.key].value" [name]="t.value.name" [bounds]=myBounds [(template)]=t.value></numeric>
+        <block *ngIf="t.value.type == 'block'" [data]="data?.content[t.key]" [name]="t.value.name" [bounds]=myBounds [(template)]=t.value></block>
+        <list *ngIf="t.value.type == 'list'" [data]="data?.content[t.key]" [name]="t.value.name" [bounds]=myBounds [(template)]=t.value></list>
+    </ng-container>
+</div>

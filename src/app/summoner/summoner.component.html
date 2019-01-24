@@ -1,0 +1,6 @@
+
+<button (click)="lock.toggleLock()">{{ lock.locked ? "unlock" : "lock" }}</button>
+<ng-container *ngFor="let baseBlock of template.currentTemplate">
+    <block [data]="dataService._data[baseBlock.name]" (started)="onStart($event)" (stopped)="onStop($event)" (movingOffset)="onMoving($event)" [bounds]="bounds" [(template)]="baseBlock"></block>
+</ng-container>
+<template-viewer></template-viewer>

@@ -1,0 +1,40 @@
+<div 
+     *ngIf="data?.content && template.show" 
+     class="block" 
+     ngDraggable ngResizable 
+     [handle]="myHandle" 
+     [preventDefaultEvent]="true" 
+     [ngDraggable]="!lock.locked" 
+     [ngResizable]="!lock.locked" 
+     (stopped)="onStop($event)"  
+     (rzStop)="onResizeStop($event)" 
+     [position]="position"
+     [ngStyle]="{
+                'width': template.size?.width+'px',
+                'height': template.size?.height+'px',
+                'transform': 'translate('+position?.x+'px,'+position?.y+'px)'
+                }" 
+     [inBounds]="false" 
+     [bounds]="bounds"  
+     [gridSize]="params.gridValue" 
+     [rzGrid]="params.gridValue"
+     #myBounds >
+    <div #myHandle class="drag-block-handle" [ngClass]="{'locked': lock.locked}"> X </div>
+    <div *ngIf="template.label"><h4>{{data.name}}</h4></div>
+    <ng-container *ngIf="!lock.locked">
+        <image *ngIf="template.content.type == 'img'" [value]="data.content[0]" [bounds]=myBounds [(template)]="template.content"></image>
+        <string *ngIf="template.content.type == 'string'" [value]="data.content[0]" [name]="template.content.name" [bounds]=myBounds [(template)]=template.content></string>
+        <numeric *ngIf="template.content.type == 'numeric'" [value]="data.content[0]" [name]="template.content.name" [bounds]=myBounds [(template)]=template.content></numeric>
+        <block *ngIf="template.content.type == 'block'" [data]="data.content[0]" [name]="template.content.name" [bounds]=myBounds [(template)]=template.content></block>
+        <list *ngIf="template?.content.type == 'list'" [data]="data.content[0]" [name]="template.content.name" [bounds]=myBounds [(template)]=template.content></list>
+    </ng-container>
+    <ng-container  *ngIf="lock.locked">
+        <ng-container *ngFor="let d of data?.content">
+        <image class="list" *ngIf="template.content.type == 'img'" [value]="d" [bounds]=myBounds [(template)]="template.content"></image>
+        <string class="list" *ngIf="template.content.type == 'string'" [value]="d" [name]="template.content.name" [bounds]=myBounds [(template)]=template.content></string>
+        <numeric class="list" *ngIf="template.content.type == 'numeric'" [value]="d" [name]="template.content.name" [bounds]=myBounds [(template)]=template.content></numeric>
+        <block class="list" *ngIf="template.content.type == 'block'" [data]="d" [name]="template.content.name" [bounds]=myBounds [(template)]=template.content></block>
+        <list class="list" *ngIf="template?.content.type == 'list'" [data]="d" [name]="template.content.name" [bounds]=myBounds [(template)]=template.content></list>
+        </ng-container>
+    </ng-container>
+</div>

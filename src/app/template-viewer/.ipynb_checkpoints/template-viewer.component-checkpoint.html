@@ -1,0 +1,16 @@
+<div *ngIf="!lock.locked" class="templateViewer" [ngClass]="{'left':left, 'right':!left}">
+    <button *ngIf="left" (click)="left=!left" style="float:right"> → </button>
+    <button *ngIf="!left" (click)="left=!left"> ← </button>
+    <button (click)="template.saveTemplate()">Save template</button>
+    <button (click)="creatingBlock=!creatingBlock">New block</button>
+    <div *ngIf="creatingBlock">
+        <div *ngFor="let t of data.types" class="click" (click)="template.add(data._schemas[t])">
+            {{t}}
+        </div>
+    </div>
+    <br />
+    Template Viewer<br />
+    <ng-container *ngFor="let block of template.currentTemplate">
+        <template-component [(template)]="block" [level]="0" class="templateComponent"></template-component>
+    </ng-container>
+</div>

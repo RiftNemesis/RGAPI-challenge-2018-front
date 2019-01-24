@@ -1,0 +1,22 @@
+<div id="top-padding" [ngClass]="miniClass"></div>
+<div id="top-bar" [ngClass]="miniClass">
+  <div *ngIf="summoner" class="option-bar">
+    <!--
+    <button class="icon" (click)="toggleMinimized()">menu</button>
+    -->
+    <!--<div class="select">
+      <md-select name="Config" [values]="['a', 'b', 'c']"></md-select>
+    </div>-->
+    <input type="checkbox" class="edit-toggle" (click)="editToggleClicked($event)">
+    <button class="icon" (click)="showSettings()">settings</button>
+  </div>
+
+
+  <h1 id="title">
+    <span (click)="router.navigate(['/'])">
+      Riot <b>API</b> Challenge <i>2018</i>
+    </span>
+  </h1>
+
+</div>
+

@@ -1,0 +1,24 @@
+<div 
+     *ngIf="template.show"
+     class="imageBlock" 
+     ngDraggable ngResizable 
+     style="background-size: cover;" 
+     [ngDraggable]="!lock.locked" 
+     [ngResizable]="!lock.locked" 
+     (click)="click($event)"
+     (stopped)="onStop($event)"  
+     (rzStop)="onResizeStop($event)" 
+     [preventDefaultEvent]="true" 
+     [gridSize]="params.gridValue" 
+     [rzGrid]="params.gridValue"
+     [position]="position"
+     [ngStyle]="{
+                'background-image': 'url('+value+')',
+                'width': template.size?.width+'px',
+                'height': template.size?.height+'px',
+                'transform': 'translate('+position?.x+'px,'+position?.y+'px)'
+                }" 
+     [rzAspectRatio]="true" >
+    <div #myHandle class="drag-block-handle" [ngClass]="{'locked': lock.locked}"> X </div>
+    <ng-container *ngIf="template.label">{{data.name}}</ng-container>
+</div>

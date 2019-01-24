@@ -1,0 +1,24 @@
+<div 
+     *ngIf="template.show"
+     class="finalBlock"
+     ngDraggable ngResizable  
+     [ngClass]="{'block':!lock.locked}" 
+     [ngDraggable]="!lock.locked" 
+     [ngResizable]="!lock.locked" 
+     (stopped)="onStop($event)"  
+     (rzStop)="onResizeStop($event)" 
+     [bounds]="bounds" 
+     [inBounds]="false" 
+     [preventDefaultEvent]="true"  
+     [gridSize]="params.gridValue" 
+     [rzGrid]="params.gridValue"
+     [position]="position"
+     [ngStyle]="{
+                'width': template?.size?.width+'px',
+                'height': template?.size?.height+'px',
+                'transform': 'translate('+position?.x+'px,'+position?.y+'px)'
+                }" 
+     #myHandle >
+    <div #myHandle class="drag-block-handle" [ngClass]="{'locked': lock.locked}"> X </div>
+    <ng-container *ngIf="template.label">{{name}} : </ng-container>{{value}}
+</div>

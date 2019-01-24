@@ -1,0 +1,17 @@
+<input type="checkbox" [checked]="template.show" (change)="template.show = !template.show" />{{template.name}}
+<button (click)="templateService.delete(template)"*ngIf="level==0">Delete</button>
+<button (click)="open=!open" *ngIf="open"> -</button>
+<button (click)="open=!open" *ngIf="!open"> +</button>
+
+<ng-container *ngIf="open">
+    <div class="templateOptionsTitle">Options : </div>
+    <div class="templateOptions"><input type="checkbox" [checked]="template.label" (change)="template.label = !template.label" />Label</div>
+
+    <div *ngIf="template?.content" class="templateOptionsTitle">Content : </div>
+    <ng-container *ngIf="template.type != 'list'">
+        <template-component *ngFor="let block of template?.content | keyvalue" [(template)]="block.value" [level]="level+1" class="templateComponent"></template-component>
+    </ng-container>
+    <ng-container *ngIf="template.type == 'list'">
+        <template-component *ngFor="let block of template?.content.content | keyvalue" [(template)]="block.value" [level]="level+1" class="templateComponent"></template-component>
+    </ng-container>
+</ng-container>
